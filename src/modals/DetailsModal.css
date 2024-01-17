@@ -1,0 +1,16 @@
+.modal-content {
+  background-color: rgba(135, 169, 186, 0.926);
+}
+
+.modal-header {
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.modal-header > img {
+  width: 140px;
+  height: 200px;
+}
+
+.modal-body {
+  padding: 0;
+}
