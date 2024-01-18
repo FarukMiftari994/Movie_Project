@@ -5,7 +5,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 // import { useEffect, useState } from "react";
 
 import Sidebar from "./Components/SideBar";
-import { HashRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Popular from "./pages/Popular.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import { useEffect, useState } from "react";
@@ -57,7 +57,7 @@ function App(): JSX.Element {
   return (
     <>
       <NavBar popular={popular} />
-      <HashRouter>
+      <BrowserRouter>
         <Sidebar>
           <CardProvider>
             <Routes>
@@ -70,7 +70,7 @@ function App(): JSX.Element {
             </Routes>
           </CardProvider>
         </Sidebar>
-      </HashRouter>
+      </BrowserRouter>
       {/* <Footer now_playing={now_playing} /> */}
     </>
   );
