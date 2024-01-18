@@ -3,9 +3,10 @@ import { FaStar } from "react-icons/fa";
 import "./SearchCards.css";
 import { useState } from "react";
 import Model from "../modals/DetailsModal";
+import { Okej } from "../@types";
 
-function SearchCards({ searchPopular }: { searchPopular?: any }): JSX.Element {
-  const [show, setShow] = useState<any>(false);
+function SearchCards({ searchPopular }: { searchPopular: Okej }): JSX.Element {
+  const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 

@@ -10,16 +10,20 @@ export interface Okej {
   backdrop_path: string;
   genre_ids: number[];
   id: number;
-  origin_country: string[];
+  origin_country?: string[];
   original_language: string;
-  original_name: string;
+  original_name?: string;
+  original_title?: string;
   overview: string;
   popularity: number;
   poster_path: string;
-  first_air_date: Date;
-  name: string;
+  first_air_date?: string;
+  release_date?: string;
+  name?: string;
+  title?: string;
   vote_average: number;
   vote_count: number;
+  video?: boolean;
 }
 
 export interface User {

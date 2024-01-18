@@ -3,6 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/esm/Button";
 import { FaStar } from "react-icons/fa";
 import "./DetailsModal.css";
+import { Okej } from "../@types";
 
 function DetailsModal({
   show,
@@ -11,7 +12,7 @@ function DetailsModal({
 }: {
   show: any;
   handleClose: any;
-  populars?: any;
+  populars: Okej;
 }) {
   return (
     <Modal
@@ -24,10 +25,10 @@ function DetailsModal({
         <img src={`https://image.tmdb.org/t/p/w500${populars.poster_path}`} />
         <div className="ps-3">
           <Modal.Title className="text-black">
-            <b>{populars.name}</b>
+            <b>{populars.title}</b>
           </Modal.Title>
           <Modal.Title className="text-black">
-            <b>{populars.first_air_date}</b>
+            <b>{populars.release_date}</b>
           </Modal.Title>
           <Modal.Title className="text-black d-flex align-items-center">
             <FaStar />

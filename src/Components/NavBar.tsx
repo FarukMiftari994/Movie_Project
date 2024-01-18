@@ -7,11 +7,12 @@ import "./NavBar.css";
 import { useState } from "react";
 import Model from "../modals/SearchModal";
 import Model2 from "../modals/LoginModal";
+import { Okej } from "../@types";
 
-function NavBar({ popular }: { popular?: any }): JSX.Element {
+function NavBar({ popular }: { popular: Okej[] }): JSX.Element {
   console.log("characters nav :>> ", popular);
-  const [show, setShow] = useState<any>(false);
-  const [show2, setShow2] = useState<any>(false);
+  const [show, setShow] = useState(false);
+  const [show2, setShow2] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);

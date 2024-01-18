@@ -3,7 +3,7 @@ import { FaTh, FaUserAlt, FaThList } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import "../App.css";
 
-function Sidebar({ children }: { children: any }): JSX.Element {
+function Sidebar({ children }: { children: React.ReactNode }): JSX.Element {
   const menuItem = [
     {
       path: "/",
@@ -11,8 +11,8 @@ function Sidebar({ children }: { children: any }): JSX.Element {
       icon: <FaTh />,
     },
     {
-      path: "/upcoming",
-      name: "Upcoming",
+      path: "/popular",
+      name: "Popular",
       icon: <FaUserAlt />,
     },
 

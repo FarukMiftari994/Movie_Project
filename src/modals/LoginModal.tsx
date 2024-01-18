@@ -1,7 +1,6 @@
 // import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/esm/Button";
-import "./LoginModal.css";
 import Form from "react-bootstrap/Form";
 
 function LoginModal({ show, handleClose }: { show: any; handleClose: any }) {

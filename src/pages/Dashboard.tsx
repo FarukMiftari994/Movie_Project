@@ -1,13 +1,11 @@
-// import React from 'react';
-
-// import React from "react";
 import Cards from "../Components/Cards";
 import CardContext from "../Components/CardContext";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { Okej } from "../@types";
 
 type Props = {
-  popular: any;
+  popular: Okej[];
 };
 
 function Dashboard({ popular }: Props) {

@@ -4,17 +4,18 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { useState } from "react";
 import Model from "../modals/DetailsModal";
 import { FaStar } from "react-icons/fa";
-// import { useContext } from "react";
-// import CardContext from "./CardContext";
+import { Okej } from "../@types";
+import { useContext } from "react";
+import CardContext from "./CardContext";
 
-function BasicExample({ item }: { item?: any }): JSX.Element {
-  console.log(item);
+function BasicExample({ item }: { item: Okej }): JSX.Element {
+  console.log("this is the item", item);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  //   const { addToFavourites } = useContext(CardContext);
+  const { removeFromFavourites } = useContext(CardContext);
   return (
     <div
       className="p-0"
@@ -50,8 +51,12 @@ function BasicExample({ item }: { item?: any }): JSX.Element {
             borderBottomLeftRadius: "20px",
             height: "87px",
           }}
+          onClick={() => removeFromFavourites(item)}
         >
-          <b>{item.name}</b>
+          <b>
+            {item.name}
+            {item.title}
+          </b>
         </ListGroup.Item>
       </ListGroup>
       <Model show={show} handleClose={handleClose} populars={item} />

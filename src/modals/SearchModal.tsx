@@ -4,11 +4,12 @@ import Button from "react-bootstrap/esm/Button";
 import "./DetailsModal.css";
 // import Cards from "../Components/Cards";
 import SearchCards from "../Components/SearchCards";
+import { Okej } from "../@types";
 
 type Props = {
   show: any;
   handleClose: any;
-  popular: any;
+  popular: Okej[];
 };
 function SearchModal({ show, handleClose, popular }: Props) {
   console.log("characters search modal", popular);

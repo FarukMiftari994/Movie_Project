@@ -6,8 +6,9 @@ import Model from "../modals/DetailsModal";
 import { FaStar } from "react-icons/fa";
 import { useContext } from "react";
 import CardContext from "./CardContext";
+import { Okej } from "../@types";
 
-function BasicExample({ populars }: { populars?: any }): JSX.Element {
+function BasicExample({ populars }: { populars: Okej }): JSX.Element {
   const { addToFavourites } = useContext(CardContext);
   const [show, setShow] = useState(false);
 
@@ -51,7 +52,9 @@ function BasicExample({ populars }: { populars?: any }): JSX.Element {
             height: "87px",
           }}
         >
-          <b>{populars.name}</b>
+          <b>
+            {populars.title} {populars.name}
+          </b>
         </ListGroup.Item>
       </ListGroup>
       <Model show={show} handleClose={handleClose} populars={populars} />

@@ -3,6 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/esm/Button";
 import { FaStar } from "react-icons/fa";
 import "./DetailsModal.css";
+import { Okej } from "../@types";
 
 function DetailsModal({
   show,
@@ -11,7 +12,7 @@ function DetailsModal({
 }: {
   show: any;
   handleClose: any;
-  play?: any;
+  play: Okej;
 }) {
   return (
     <Modal
