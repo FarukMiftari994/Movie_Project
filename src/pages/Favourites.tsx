@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import CardContext from "../Components/CardContext";
+import CardContext from "../context/CardContext";
 import CardsFavourites from "../Components/CardsFavourites";
 
 function Favourites(): JSX.Element {

@@ -5,13 +5,14 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 // import { useEffect, useState } from "react";
 
 import Sidebar from "./Components/SideBar";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Popular from "./pages/Popular.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import { useEffect, useState } from "react";
-import { CardProvider } from "./Components/CardContext.tsx";
+import { CardProvider } from "./context/CardContext.tsx";
 import Favourites from "./pages/Favourites.tsx";
 import { Okej } from "./@types/index.ts";
+import { AuthContextProvider } from "./context/AuthContext.tsx";
 
 function App(): JSX.Element {
   const [popular, setPopular] = useState<Okej[]>([]);
@@ -56,21 +57,24 @@ function App(): JSX.Element {
 
   return (
     <>
-      <NavBar popular={popular} />
-      <BrowserRouter>
-        <Sidebar>
-          <CardProvider>
-            <Routes>
-              <Route path="/" element={<Dashboard popular={popular} />} />
-              <Route
-                path="/popular"
-                element={<Popular nowPlaying={nowPlaying} />}
-              />
-              <Route path="/favourites" element={<Favourites />} />
-            </Routes>
-          </CardProvider>
-        </Sidebar>
-      </BrowserRouter>
+      <Router>
+        <AuthContextProvider>
+          <NavBar popular={popular} />
+          <Sidebar>
+            <CardProvider>
+              <Routes>
+                <Route path="/" element={<Dashboard popular={popular} />} />
+                <Route
+                  path="/popular"
+                  element={<Popular nowPlaying={nowPlaying} />}
+                />
+                <Route path="/favourites" element={<Favourites />} />
+              </Routes>
+            </CardProvider>
+          </Sidebar>
+        </AuthContextProvider>
+      </Router>
+
       {/* <Footer now_playing={now_playing} /> */}
     </>
   );

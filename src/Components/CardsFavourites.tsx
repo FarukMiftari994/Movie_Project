@@ -6,7 +6,7 @@ import Model from "../modals/DetailsModal";
 import { FaStar } from "react-icons/fa";
 import { Okej } from "../@types";
 import { useContext } from "react";
-import CardContext from "./CardContext";
+import CardContext from "../context/CardContext";
 
 function BasicExample({ item }: { item: Okej }): JSX.Element {
   console.log("this is the item", item);

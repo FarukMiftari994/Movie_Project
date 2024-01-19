@@ -1,5 +1,5 @@
 import Cards from "../Components/Cards";
-import CardContext from "../Components/CardContext";
+import CardContext from "../context/CardContext";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Okej } from "../@types";
@@ -16,7 +16,7 @@ function Dashboard({ popular }: Props) {
         {popular.map((populars) => {
           return <Cards key={populars.id} populars={populars} />;
         })}
-        <Link to={"/Favourites"}>
+        <Link to={"/favourites"}>
           <h1>{items.length}</h1>
         </Link>
       </div>

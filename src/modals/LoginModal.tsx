@@ -1,9 +1,12 @@
 // import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/esm/Button";
-import Form from "react-bootstrap/Form";
+import AuthForm from "../context/AuthForm";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 function LoginModal({ show, handleClose }: { show: any; handleClose: any }) {
+  const { login } = useContext(AuthContext);
   return (
     <Modal
       aria-labelledby="contained-modal-title-vcenter"
@@ -11,25 +14,11 @@ function LoginModal({ show, handleClose }: { show: any; handleClose: any }) {
       show={show}
       onHide={handleClose}
     >
-      <Modal.Body>
-        <div className="d-flex justify-content-center">
-          <Modal.Header>Sign In</Modal.Header>
-        </div>
-        <div>
-          <Form className="d-flex justify-content-center">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="name@example.com"
-                autoFocus
-              />
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" autoFocus />
-            </Form.Group>
-          </Form>
-        </div>
-      </Modal.Body>
+      <div className="d-flex justify-content-center">
+        <Modal.Header>Sign In</Modal.Header>
+        <AuthForm submitTitle="Login" submit={login} />
+      </div>
+
       <Modal.Footer className="d-flex justify-content-center">
         <Button variant="outline-dark" onClick={handleClose}>
           Close
