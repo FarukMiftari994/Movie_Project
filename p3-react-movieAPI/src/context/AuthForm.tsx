@@ -7,7 +7,7 @@ type Props = {
   handleClose: any;
 };
 
-const AuthForm = ({ submitTitle, submit, handleClose }: Props) => {
+export const AuthForm = ({ submitTitle, submit, handleClose }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

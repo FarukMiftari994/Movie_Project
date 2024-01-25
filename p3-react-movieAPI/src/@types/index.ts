@@ -6,6 +6,9 @@ export interface Welcome6 {
 }
 
 export interface Okej {
+  favourites: boolean;
+  map(arg0: (i: any) => void): unknown;
+  items: boolean;
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];

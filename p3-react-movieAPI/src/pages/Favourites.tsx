@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import CardContext from "../context/CardContext";
-import CardsFavourites from "../Components/CardsFavourites";
+import Cards from "../Components/Cards";
 
 function Favourites(): JSX.Element {
   const { items } = useContext(CardContext);
@@ -10,7 +10,7 @@ function Favourites(): JSX.Element {
   return (
     <div className="d-flex justify-content-around row p-5">
       {uniqueItems.map((item) => {
-        return item ? <CardsFavourites key={item.id} item={item} /> : null;
+        return item ? <Cards key={item.id} populars={item} /> : null;
       })}
     </div>
   );

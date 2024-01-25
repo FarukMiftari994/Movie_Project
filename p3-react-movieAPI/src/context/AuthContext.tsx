@@ -1,9 +1,11 @@
-import { PropsWithChildren, createContext, useState } from "react";
+import { PropsWithChildren, createContext, useEffect, useState } from "react";
 // import { User } from "../@types";
 import { useNavigate } from "react-router-dom";
 import {
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut,
   type User,
 } from "firebase/auth";
 import { auth } from "../pages/firebase";
@@ -54,23 +56,56 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
         setUser(user);
       })
       .catch((error) => {
-        const { message } = error as Error;
-        console.log("okej", message);
+        const { message } = error.message;
+        console.log("Login failed", message);
+        alert("No account associated with the email address. Please Sign Up");
       });
-    // if (email === testUser.email) {
-    //   setUser(testUser);
-    //   console.log({ message: "success!" });
-    //   navigate("/");
-    // } else {
-    //   console.log({ message: "failed :(" });
-    // }
   };
+
+  // const login = (email: string, password: string) => {
+  //   signInWithEmailAndPassword(auth, email, password)
+  //     .then((userCredential) => {
+  //       const user = userCredential.user;
+  //       setUser(user);
+  //     })
+  //     .catch((error) => {
+  //       const { code, message } = error;
+
+  //       if (code === "auth/user-not-found") {
+  //         alert("No account found with this email address. Please sign up.");
+  //       } else if (code === "auth/wrong-password") {
+  //         alert("Invalid password. Please try again.");
+  //       } else if (code === "auth/invalid-email") {
+  //         alert("Invalid email format. Please enter a valid email address.");
+  //       } else {
+  //         alert(message);
+  //       }
+  //     });
+  // };
 
   const logout = () => {
-    setUser(null);
-    navigate("/");
+    signOut(auth)
+      .then(() => {
+        setUser(null);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
+  useEffect(() => {
+    const getActiveUser = () => {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setUser(user);
+        } else {
+          setUser(null);
+        }
+      });
+    };
+    getActiveUser();
+  }, []);
   return (
     <AuthContext.Provider value={{ user, signup, login, logout }}>
       {children}
