@@ -53,7 +53,7 @@ function NavBar({ popular }: { popular: Okej[] }): JSX.Element {
             LOGOUT
           </Button>
         )}
-        <div className="pt-3 ps-2">{user && <p>Hello: {user.email}</p>}</div>
+        <div className="pt-3 ps-2">{user && <p>{user.email}</p>}</div>
       </Navbar>
       <Model show={show} handleClose={handleClose} popular={popular} />
       <Model2 show={show2} handleClose={handleClose2} />
