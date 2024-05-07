@@ -25,7 +25,7 @@ function Sidebar({ children }: { children: React.ReactNode }): JSX.Element {
     },
   ];
   return (
-    <div className="haupt">
+    <div className="main-container">
       <div className="container">
         <div className="sidebar">
           {menuItem.map(

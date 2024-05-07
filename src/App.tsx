@@ -11,14 +11,14 @@ import { CardProvider } from "./context/CardContext.tsx";
 import Favourites from "./pages/Favourites.tsx";
 import { Okej } from "./@types/index.ts";
 import { AuthContextProvider } from "./context/AuthContext.tsx";
-import { db } from "./pages/firebase.ts";
-import { collection, onSnapshot, query } from "firebase/firestore";
+// import { db } from "./pages/firebase.ts";
+// import { collection, onSnapshot, query } from "firebase/firestore";
 
 function App(): JSX.Element {
   const [popular, setPopular] = useState<Okej[]>([]);
   const [nowPlaying, setNowPlaying] = useState<Okej[]>([]);
-  const [cart, setCart] = useState([]);
-  console.log("oooooo", cart);
+  // const [card, setCard] = useState([]);
+  // console.log("card :>> ", card);
 
   async function fetchData() {
     try {
@@ -29,8 +29,6 @@ function App(): JSX.Element {
         fetch(
           "https://api.themoviedb.org/3/tv/popular?language=en-US&page=1&api_key=1ac353c571e268ba328e411672d94ff8"
         ).then((value) => value.json()),
-        // fetch().then(value => value.json()),
-        // fetch().then(value => value.json()),
       ])
         .then((value) => {
           console.log(value);
@@ -50,42 +48,23 @@ function App(): JSX.Element {
     fetchData().catch((e) => console.log(e));
     // It's a function used for real-time updates from a Firestore collection. It takes a query and a callback function.
     // The callback function is executed whenever there is a change in the specified Firestore collection.
-    const unsubscribe = onSnapshot(
-      query(collection(db, "favourites")),
-      (querySnapshot) => {
-        const p: any = [];
-        querySnapshot.forEach((doc) => {
-          p.push(doc.data());
-          popular.map((i) => {
-            if (i.id === doc.data().id) {
-              i.favourites = true;
-            }
-          });
-        });
-        setCart(p);
-      }
-    );
-    return () => unsubscribe();
+    // const unsubscribe = onSnapshot(
+    //   query(collection(db, "favourites")),
+    //   (querySnapshot) => {
+    //     const p: any = [];
+    //     querySnapshot.forEach((doc) => {
+    //       popular.map((i) => {
+    //         if (i.id === doc.data().id) {
+    //           p.push(doc.data());
+    //           i.favourites = true;
+    //         }
+    //       });
+    //     });
+    //     setCard(p);
+    //   }
+    // );
+    // return () => unsubscribe();
   }, []);
-
-  // const addtocart = (item: any) => {
-  //   popular.map((i) => {
-  //     if (i.id === item.id) {
-  //       i.cart = true;
-  //     }
-  //   });
-  //   const docRef = doc(collection(db, "cart"), `${item.id}`);
-  //   updateDoc(docRef, item);
-  // };
-  // const removetocart = (item: any) => {
-  //   popular.map((i) => {
-  //     if (i.id === item.id) {
-  //       i.cart = false;
-  //     }
-  //   });
-  //   const docRef = doc(collection(db, "cart"), `${item.id}`);
-  //   deleteDoc(docRef);
-  // };
 
   return (
     <>
@@ -106,8 +85,6 @@ function App(): JSX.Element {
           </Sidebar>
         </AuthContextProvider>
       </Router>
-
-      {/* <Footer now_playing={now_playing} /> */}
     </>
   );
 }

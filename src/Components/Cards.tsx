@@ -41,11 +41,13 @@ function BasicExample({ populars }: { populars: Okej }): JSX.Element {
       if (!user) {
         return console.log("no user");
       }
-      console.log("user");
-      const docSnap = await getDoc(doc(db, "favourites", populars.id + ""));
+      console.log("user", user.email);
+      const docSnap = await getDoc(doc(db, "favourites", user.email + ""));
       if (docSnap.exists()) {
         const array = docSnap.data().favourites;
-        const favByUser = array.includes(user.uid);
+        const favByUser = array.includes(
+          populars.title ? populars.title : populars.name
+        );
         setFavouritedBy(favByUser);
 
         console.log("this is the fav", favByUser);

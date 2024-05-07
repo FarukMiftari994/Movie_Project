@@ -53,6 +53,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
+        console.log("user :>> ", user);
         setUser(user);
       })
       .catch((error) => {
@@ -61,27 +62,6 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
         alert("No account associated with the email address. Please Sign Up");
       });
   };
-
-  // const login = (email: string, password: string) => {
-  //   signInWithEmailAndPassword(auth, email, password)
-  //     .then((userCredential) => {
-  //       const user = userCredential.user;
-  //       setUser(user);
-  //     })
-  //     .catch((error) => {
-  //       const { code, message } = error;
-
-  //       if (code === "auth/user-not-found") {
-  //         alert("No account found with this email address. Please sign up.");
-  //       } else if (code === "auth/wrong-password") {
-  //         alert("Invalid password. Please try again.");
-  //       } else if (code === "auth/invalid-email") {
-  //         alert("Invalid email format. Please enter a valid email address.");
-  //       } else {
-  //         alert(message);
-  //       }
-  //     });
-  // };
 
   const logout = () => {
     signOut(auth)

@@ -2,8 +2,6 @@ import { createContext, useState, ReactNode, useContext } from "react";
 import { Okej } from "../@types";
 import {
   arrayRemove,
-  arrayUnion,
-  collection,
   doc,
   getDoc,
   setDoc,
@@ -29,16 +27,28 @@ export function CardProvider({ children }: { children: ReactNode }) {
     }
     try {
       setItems((prevState) => [...prevState, populars]);
-      const docRef = doc(db, "favourites", populars.id + "");
+      const docRef = doc(db, "favourites", user.email + "");
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
+        const title = populars.title ? populars.title : populars.name;
         await updateDoc(docRef, {
-          favourites: arrayUnion(user.uid),
+          [`${title}`]: {
+            title: title,
+            poster_path: populars.poster_path,
+            vote_average: populars.vote_average,
+          },
         });
       } else {
         const title = populars.title ? populars.title : populars.name;
-        await setDoc(docRef, { favourites: [user.uid], name: title });
+
+        await setDoc(docRef, {
+          [`${title}`]: {
+            title: title,
+            poster_path: populars.poster_path,
+            vote_average: populars.vote_average,
+          },
+        });
       }
     } catch (error) {
       console.error("Error removing from favourites:", error);
@@ -51,17 +61,11 @@ export function CardProvider({ children }: { children: ReactNode }) {
         return;
       }
       setItems((prevState) => prevState.filter((item) => item !== populars));
-      const docRef = doc(collection(db, "favourites"), `${populars.id}`);
+      const title = populars.title ? populars.title : populars.name;
+      const docRef = doc(db, "favourites", user.email + "");
       await updateDoc(docRef, {
-        favourites: arrayRemove(user.uid),
+        [`${title}`]: arrayRemove(`${title}`),
       });
-      // const docSnap = await getDoc(docRef);
-
-      // if (docSnap.exists()) {
-      //   await deleteDoc(docRef);
-      // } else {
-      //   console.warn("Document not found for removal:", populars);
-      // }
     } catch (error) {
       console.error("Error removing from favourites:", error);
     }
