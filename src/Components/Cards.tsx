@@ -19,7 +19,8 @@ function BasicExample({ populars }: { populars: Okej }): JSX.Element {
   const [show, setShow] = useState(false);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const { user } = useContext(AuthContext);
-  console.log(isButtonClicked);
+
+  // console.log("isButtonClicked :>> ", isButtonClicked);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -44,18 +45,16 @@ function BasicExample({ populars }: { populars: Okej }): JSX.Element {
       console.log("user", user.email);
       const docSnap = await getDoc(doc(db, "favourites", user.email + ""));
       if (docSnap.exists()) {
-        const array = docSnap.data().favourites;
-        const favByUser = array.includes(
-          populars.title ? populars.title : populars.name
-        );
+        const array = docSnap.data().favourites || [];
+        const title = populars.title ? populars.title : populars.name;
+        const favByUser = array.includes(title);
         setFavouritedBy(favByUser);
-
         console.log("this is the fav", favByUser);
       } else {
         console.log("No snap");
       }
+      getMyFavourites();
     };
-    getMyFavourites();
   }, [user?.email]);
 
   return (
@@ -79,7 +78,6 @@ function BasicExample({ populars }: { populars: Okej }): JSX.Element {
               onClick={handleButtonClickAdd}
               style={{
                 cursor: "pointer",
-                // opacity: isButtonClicked ? "0" : "",S
               }}
             >
               <FaHeart style={{ marginBottom: "3.5px" }} />
@@ -92,7 +90,6 @@ function BasicExample({ populars }: { populars: Okej }): JSX.Element {
               onClick={handleButtonClickRemove}
               style={{
                 cursor: "pointer",
-                // opacity: isButtonClicked ? "0" : "",
               }}
             >
               <IoClose style={{ marginBottom: "3.5px" }} />

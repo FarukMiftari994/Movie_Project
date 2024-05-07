@@ -1,7 +1,7 @@
 import { createContext, useState, ReactNode, useContext } from "react";
 import { Okej } from "../@types";
 import {
-  arrayRemove,
+  deleteField,
   doc,
   getDoc,
   setDoc,
@@ -64,7 +64,7 @@ export function CardProvider({ children }: { children: ReactNode }) {
       const title = populars.title ? populars.title : populars.name;
       const docRef = doc(db, "favourites", user.email + "");
       await updateDoc(docRef, {
-        [`${title}`]: arrayRemove(`${title}`),
+        [`${title}`]: deleteField(),
       });
     } catch (error) {
       console.error("Error removing from favourites:", error);

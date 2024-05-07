@@ -53,7 +53,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log("user :>> ", user);
+        console.log("user :>> ", user.email);
         setUser(user);
       })
       .catch((error) => {
