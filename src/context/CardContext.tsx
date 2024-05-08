@@ -29,11 +29,10 @@ export function CardProvider({ children }: { children: ReactNode }) {
       setItems((prevState) => [...prevState, populars]);
       const docRef = doc(db, "favourites", user.email + "");
       const docSnap = await getDoc(docRef);
-
       if (docSnap.exists()) {
         const title = populars.title ? populars.title : populars.name;
         await updateDoc(docRef, {
-          [`${title}`]: {
+          [`${populars.id}`]: {
             title: title,
             poster_path: populars.poster_path,
             vote_average: populars.vote_average,
@@ -43,7 +42,7 @@ export function CardProvider({ children }: { children: ReactNode }) {
         const title = populars.title ? populars.title : populars.name;
 
         await setDoc(docRef, {
-          [`${title}`]: {
+          [`${populars.id}`]: {
             title: title,
             poster_path: populars.poster_path,
             vote_average: populars.vote_average,

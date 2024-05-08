@@ -25,38 +25,59 @@ function BasicExample({ populars }: { populars: Okej }): JSX.Element {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleButtonClickAdd = () => {
+  const handleButtonClickAdd = async () => {
     addToFavourites(populars);
     setFavouritedBy(true);
     setIsButtonClicked(true);
+    // await setDoc(doc(db, "favorites", populars.id + ""), { id: populars.id });
   };
 
-  const handleButtonClickRemove = () => {
+  const handleButtonClickRemove = async () => {
     removeFromFavourites(populars);
     setFavouritedBy(false);
+    // try {
+    //   await deleteDoc(doc(db, "favorites", populars.id + ""));
+    // } catch (error) {
+    //   console.error("Error removing document: ", error);
+    // }
   };
 
   //use effect takes two arguements : a function, and a dependency array
+  // useEffect(() => {
+  //   const getMyFavourites = async () => {
+  //     if (!user) {
+  //       return console.log("no user");
+  //     }
+  //     console.log("user", user.email);
+  //     const docSnap = await getDoc(doc(db, "favourites", user.email + ""));
+  //     if (docSnap.exists()) {
+  //       // const array = docSnap.data().favourites || [];
+  //       // const title = populars.title ? populars.title : populars.name;
+  //       // const favByUser = array.includes(title);
+  //       setFavouritedBy(true);
+  //       // console.log("this is the fav", favByUser);
+  //     } else {
+  //       console.log("No snap");
+  //     }
+  //     getMyFavourites();
+  //   };
+  // }, [user?.email]);
+  const checkFavoritedState = async () => {
+    const docRef = doc(db, "favorites", user?.email + "");
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const title = populars.title ? populars.title : populars.name;
+      const array = docSnap.data().favourites || [];
+      const fav = array.includes(title);
+      setFavouritedBy(fav);
+      console.log("fav :>> ", fav);
+    } else {
+      console.log("No snap");
+    }
+  };
   useEffect(() => {
-    const getMyFavourites = async () => {
-      if (!user) {
-        return console.log("no user");
-      }
-      console.log("user", user.email);
-      const docSnap = await getDoc(doc(db, "favourites", user.email + ""));
-      if (docSnap.exists()) {
-        const array = docSnap.data().favourites || [];
-        const title = populars.title ? populars.title : populars.name;
-        const favByUser = array.includes(title);
-        setFavouritedBy(favByUser);
-        console.log("this is the fav", favByUser);
-      } else {
-        console.log("No snap");
-      }
-      getMyFavourites();
-    };
+    checkFavoritedState();
   }, [user?.email]);
-
   return (
     <>
       <div
