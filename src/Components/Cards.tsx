@@ -9,7 +9,14 @@ import CardContext from "../context/CardContext";
 import { Okej } from "../@types";
 import { AuthContext } from "../context/AuthContext";
 import { Button } from "react-bootstrap";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  deleteDoc,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  arrayUnion,
+} from "firebase/firestore";
 import { db } from "../pages/firebase";
 import { IoClose } from "react-icons/io5";
 
@@ -21,6 +28,7 @@ function BasicExample({ populars }: { populars: Okej }): JSX.Element {
   const { user } = useContext(AuthContext);
 
   // console.log("isButtonClicked :>> ", isButtonClicked);
+  const title = populars.title ? populars.title : populars.name;
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -29,14 +37,14 @@ function BasicExample({ populars }: { populars: Okej }): JSX.Element {
     addToFavourites(populars);
     setFavouritedBy(true);
     setIsButtonClicked(true);
-    // await setDoc(doc(db, "favorites", populars.id + ""), { id: populars.id });
   };
 
   const handleButtonClickRemove = async () => {
     removeFromFavourites(populars);
     setFavouritedBy(false);
     // try {
-    //   await deleteDoc(doc(db, "favorites", populars.id + ""));
+    //   const id = populars.id;
+    //   await deleteDoc(doc(db, "favourites", id + ""));
     // } catch (error) {
     //   console.error("Error removing document: ", error);
     // }
@@ -63,14 +71,10 @@ function BasicExample({ populars }: { populars: Okej }): JSX.Element {
   //   };
   // }, [user?.email]);
   const checkFavoritedState = async () => {
-    const docRef = doc(db, "favorites", user?.email + "");
+    const docRef = doc(db, "favourites", user?.email + "");
     const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      const title = populars.title ? populars.title : populars.name;
-      const array = docSnap.data().favourites || [];
-      const fav = array.includes(title);
-      setFavouritedBy(fav);
-      console.log("fav :>> ", fav);
+    if (docSnap.exists() && docSnap.data().favourites?.includes(title)) {
+      setFavouritedBy(true);
     } else {
       console.log("No snap");
     }

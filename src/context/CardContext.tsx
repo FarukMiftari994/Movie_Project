@@ -32,7 +32,8 @@ export function CardProvider({ children }: { children: ReactNode }) {
       if (docSnap.exists()) {
         const title = populars.title ? populars.title : populars.name;
         await updateDoc(docRef, {
-          [`${populars.id}`]: {
+          [`${title}`]: {
+            id: populars.id,
             title: title,
             poster_path: populars.poster_path,
             vote_average: populars.vote_average,
@@ -42,7 +43,8 @@ export function CardProvider({ children }: { children: ReactNode }) {
         const title = populars.title ? populars.title : populars.name;
 
         await setDoc(docRef, {
-          [`${populars.id}`]: {
+          [`${title}`]: {
+            id: populars.id,
             title: title,
             poster_path: populars.poster_path,
             vote_average: populars.vote_average,
