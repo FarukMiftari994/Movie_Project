@@ -9,11 +9,13 @@ function Favourites(): JSX.Element {
   );
 
   return (
-    <div className="d-flex justify-content-around row p-5">
-      {uniqueItems.map((item) => {
-        return item ? <Cards key={item.id} populars={item} /> : null;
-      })}
-    </div>
+    <>
+      <div className="d-flex justify-content-around row p-5">
+        {uniqueItems.map((item) => {
+          return item ? <Cards key={item.id} populars={item} /> : null;
+        })}
+      </div>
+    </>
   );
 }
 export default Favourites;

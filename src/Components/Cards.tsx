@@ -1,6 +1,6 @@
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Model from "../modals/DetailsModal";
 import { FaStar } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
@@ -9,59 +9,36 @@ import CardContext from "../context/CardContext";
 import { Okej } from "../@types";
 import { AuthContext } from "../context/AuthContext";
 import { Button } from "react-bootstrap";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../pages/firebase";
 import { IoClose } from "react-icons/io5";
 
-function BasicExample({ populars }: { populars: Okej }): JSX.Element {
+type CardsProps = {
+  populars: Okej;
+  isFav: boolean;
+};
+
+function Cards({ populars, isFav }: CardsProps) {
   const { addToFavourites, removeFromFavourites } = useContext(CardContext);
-  const [favouritedBy, setFavouritedBy] = useState(false);
+  // const [favouritedBy, setFavouritedBy] = useState(false);
   const [show, setShow] = useState(false);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const { user } = useContext(AuthContext);
 
   // console.log("isButtonClicked :>> ", isButtonClicked);
-  const title = populars.title ? populars.title : populars.name;
+  // const title = populars.title ? populars.title : populars.name;
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const handleButtonClickAdd = async () => {
     addToFavourites(populars);
-    setFavouritedBy(true);
     setIsButtonClicked(true);
   };
 
   const handleButtonClickRemove = async () => {
     removeFromFavourites(populars);
-    setFavouritedBy(false);
   };
 
   //use effect takes two arguements : a function, and a dependency array
-
-  const checkFavoritedState = async () => {
-    const docRef = doc(
-      db,
-      "favourites",
-      user?.email + "",
-      "movies",
-      title + ""
-    );
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      console.log("docSnap.data() :>> ", docSnap.data());
-      const array = docSnap.data().favourites || [];
-      const title = populars.title ? populars.title : populars.name;
-      const favByUser = array.includes(title);
-      setFavouritedBy(favByUser);
-    } else {
-      console.log("No snap");
-    }
-  };
-
-  useEffect(() => {
-    checkFavoritedState();
-  }, [user?.email]);
 
   return (
     <>
@@ -77,7 +54,7 @@ function BasicExample({ populars }: { populars: Okej }): JSX.Element {
         }}
       >
         <div className="item">
-          {user && !favouritedBy && (
+          {user && !isFav && (
             <Button
               variant="danger"
               className="notify-badge"
@@ -89,7 +66,7 @@ function BasicExample({ populars }: { populars: Okej }): JSX.Element {
               <FaHeart style={{ marginBottom: "3.5px" }} />
             </Button>
           )}
-          {user && favouritedBy && (
+          {user && isFav && (
             <Button
               variant="danger"
               className="notify-badge"
@@ -147,4 +124,4 @@ function BasicExample({ populars }: { populars: Okej }): JSX.Element {
   );
 }
 
-export default BasicExample;
+export default Cards;

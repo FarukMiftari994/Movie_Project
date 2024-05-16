@@ -1,6 +1,14 @@
 import { createContext, useState, ReactNode, useContext } from "react";
 import { Okej } from "../@types";
-import { deleteDoc, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../pages/firebase";
 import { AuthContext } from "./AuthContext";
 
@@ -14,6 +22,7 @@ const CardContext = createContext<CardContextType>({} as CardContextType);
 
 export function CardProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<Okej[]>([]);
+  const [titleArray, setTitleArray] = useState<String[]>([]);
   const { user } = useContext(AuthContext);
   const addToFavourites = async (populars: Okej) => {
     if (!user) {
@@ -67,17 +76,43 @@ export function CardProvider({ children }: { children: ReactNode }) {
         title + ""
       );
       await deleteDoc(docRef);
+      getFavoritesFromDb();
     } catch (error) {
       console.error("Error removing from favourites:", error);
     }
   };
 
+  const getFavoritesFromDb = async () => {
+    if (!user) {
+      console.log("no user");
+      return;
+    }
+    // const docRef = doc(db, "favourites", user.email , "movies");
+    const querySnapshot = await getDocs(
+      collection(db, "favourites", user.email!, "movies")
+    );
+    let favMovieTitleArray: string[] = [];
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ", doc.data());
+
+      favMovieTitleArray.push(doc.data().title);
+    });
+    console.log("favMovieTitleArray :>> ", favMovieTitleArray);
+    setTitleArray(favMovieTitleArray);
+
+    // const docSnap = await getDoc(docRef);
+    // console.log("docSnap :>> ", docSnap);
+  };
   return (
     <CardContext.Provider
       value={{
         items,
         addToFavourites,
         removeFromFavourites,
+        getFavoritesFromDb,
+        titleArray,
+        setTitleArray,
       }}
     >
       {children}
