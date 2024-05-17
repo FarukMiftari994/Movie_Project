@@ -15,6 +15,9 @@ import { AuthContext } from "./AuthContext";
 interface CardContextType {
   addToFavourites: (populars: Okej) => Promise<void>;
   removeFromFavourites: (populars: Okej) => Promise<void>;
+  getFavoritesFromDb: () => Promise<void>;
+  titleArray: String[];
+  setTitleArray: React.Dispatch<React.SetStateAction<String[]>>;
   items: Okej[];
 }
 
@@ -87,22 +90,17 @@ export function CardProvider({ children }: { children: ReactNode }) {
       console.log("no user");
       return;
     }
-    // const docRef = doc(db, "favourites", user.email , "movies");
     const querySnapshot = await getDocs(
       collection(db, "favourites", user.email!, "movies")
     );
     let favMovieTitleArray: string[] = [];
     querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
       console.log(doc.id, " => ", doc.data());
 
       favMovieTitleArray.push(doc.data().title);
     });
     console.log("favMovieTitleArray :>> ", favMovieTitleArray);
     setTitleArray(favMovieTitleArray);
-
-    // const docSnap = await getDoc(docRef);
-    // console.log("docSnap :>> ", docSnap);
   };
   return (
     <CardContext.Provider

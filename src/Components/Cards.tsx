@@ -18,20 +18,14 @@ type CardsProps = {
 
 function Cards({ populars, isFav }: CardsProps) {
   const { addToFavourites, removeFromFavourites } = useContext(CardContext);
-  // const [favouritedBy, setFavouritedBy] = useState(false);
   const [show, setShow] = useState(false);
-  const [isButtonClicked, setIsButtonClicked] = useState(false);
   const { user } = useContext(AuthContext);
-
-  // console.log("isButtonClicked :>> ", isButtonClicked);
-  // const title = populars.title ? populars.title : populars.name;
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const handleButtonClickAdd = async () => {
     addToFavourites(populars);
-    setIsButtonClicked(true);
   };
 
   const handleButtonClickRemove = async () => {

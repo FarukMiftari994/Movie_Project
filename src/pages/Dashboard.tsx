@@ -9,21 +9,16 @@ type Props = {
 };
 
 function Dashboard({ popular }: Props) {
-  // function checkIfItisFav(popular: { title: string | undefined }) {
-  //   if (popular.title) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
   const { user } = useContext(AuthContext);
-  const { getFavoritesFromDb, setTitleArray, titleArray } =
-    useContext(CardContext);
+  const { getFavoritesFromDb, titleArray } = useContext(CardContext);
 
   console.log("user :>> ", user);
 
-  const checkIfIsFavorite = (movieTitle: string) => {
-    return titleArray.includes(movieTitle) ? true : false;
+  const checkIfIsFavorite = (movieTitle: string | undefined) => {
+    if (typeof movieTitle === "string") {
+      return titleArray.includes(movieTitle) ? true : false;
+    }
+    return false;
   };
   useEffect(() => {
     getFavoritesFromDb();
