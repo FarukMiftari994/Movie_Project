@@ -58,6 +58,7 @@ export function CardProvider({ children }: { children: ReactNode }) {
           poster_path: populars.poster_path,
           vote_average: populars.vote_average,
         });
+        getFavoritesFromDb();
       }
     } catch (error) {
       console.error("Error removing from favourites:", error);
